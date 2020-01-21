@@ -4,8 +4,9 @@ metadata:
   name: config-management
   namespace: config-management-system
 spec:
-  clusterName: acm-minimal
+  clusterName: acm-policy-controller-istio-inject
   git:
     secretType: ssh
     syncRepo: git@github.com:linde/acm-minimal.git
+    syncBranch: policy-controller-istio-inject
     policyDir: config-root
