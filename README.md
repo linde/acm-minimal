@@ -48,7 +48,7 @@ enforcement. In this case, we've enabled the [`ConfigManagement`
 resource](config-management.yaml) to enable the policy controller and enabled a
 constraint using the provided [Constraint Template
 bundle](https://cloud.google.com/anthos-config-management/docs/how-to/installing-policy-controller#managing-constraint-template-library)
-to enforce a constraint on Namespace resources that enforce [istio side car
+to enforce a constraint on Namespace resources that requires [istio side car
 injection](https://istio.io/docs/setup/additional-setup/sidecar-injection/#automatic-sidecar-injection).
 
 ## Violations
