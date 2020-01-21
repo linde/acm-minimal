@@ -10,3 +10,5 @@ spec:
     syncRepo: git@github.com:linde/acm-minimal.git
     syncBranch: policy-controller-istio-inject
     policyDir: config-root
+  policyController:
+    enabled: true

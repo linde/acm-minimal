@@ -1,0 +1,17 @@
+
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: K8sRequiredLabels
+metadata:
+  name: istio-enabled-namespaces-constraint
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Namespace"]
+  parameters:
+    labels:
+    - key: istio-injection
+      value: enabled
+
+

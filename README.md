@@ -1,9 +1,13 @@
 
+## Overview
 
 this repo is a minimal [Anthos Config Management
-repo](https://cloud.google.com/anthos-config-management/docs/how-to/repo) with
+repo](https://cloud.google.com/anthos-config-management/docs/how-to/repo) (ACM) with
 the addition of the [istio
 operator](https://istio.io/docs/setup/install/standalone-operator/)
+
+
+## Istio resources
 
 This was created using kustomize and [`kpt functions`](#TBD) as follows:
 
@@ -34,4 +38,18 @@ $
 ```
 
 and they're copied into their respective ACM locations in this commit.
+
+
+## [Policy Controller]() resources
+
+This repo also has resources which enable [ACM Policy
+Controller](https://cloud.google.com/anthos-config-management/docs/how-to/installing-policy-controller)
+enforcement. In this case, we've enabled the [`ConfigManagement`
+resource](config-management.yaml) to enable the policy controller and enabled a
+constraint using the provided [Constraint Template
+bundle](https://cloud.google.com/anthos-config-management/docs/how-to/installing-policy-controller#managing-constraint-template-library)
+to enforce a constraint on Namespace resources that enforce [istio side car
+injection](https://istio.io/docs/setup/additional-setup/sidecar-injection/#automatic-sidecar-injection).
+
+
 
