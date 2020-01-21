@@ -40,7 +40,7 @@ $
 and they're copied into their respective ACM locations in this commit.
 
 
-## [Policy Controller]() resources
+## Policy Controller resources
 
 This repo also has resources which enable [ACM Policy
 Controller](https://cloud.google.com/anthos-config-management/docs/how-to/installing-policy-controller)
