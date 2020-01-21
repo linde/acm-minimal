@@ -51,5 +51,22 @@ bundle](https://cloud.google.com/anthos-config-management/docs/how-to/installing
 to enforce a constraint on Namespace resources that enforce [istio side car
 injection](https://istio.io/docs/setup/additional-setup/sidecar-injection/#automatic-sidecar-injection).
 
+## Violations
+
+The constraint example is run in an Audit mode which captures violations, but
+does not otherwise impact admission. This is enabled by specifying enforcement
+of 'dryrun' for the constraint (see example,
+[istio-enabled-namespaces-constraint](config-root/cluster/istio-enabled-namespaces-constraint.yaml#L7).
+
+Audit violations are captured in the constraint resource. To see them simply via the CLI, try the following:
+
+```bash
+$ kubectl get k8srequiredlabels istio-enabled-namespaces-constraint -o json | jq .status.violations
+
+```
+
+
+
+
 
 
