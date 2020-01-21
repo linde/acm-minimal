@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-operator-metrics
+  namespace: istio-operator
+  labels:
+    name: istio-operator
+spec:
+  selector:
+    name: istio-operator
+  ports:
+  - name: http-metrics
+    port: 8383
+    targetPort: 8383

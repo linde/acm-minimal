@@ -1,0 +1,110 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: istio-operator
+  creationTimestamp: null
+rules:
+- resources:
+  - '*'
+  apiGroups:
+  - authentication.istio.io
+  verbs:
+  - '*'
+- resources:
+  - '*'
+  apiGroups:
+  - config.istio.io
+  verbs:
+  - '*'
+- resources:
+  - '*'
+  apiGroups:
+  - install.istio.io
+  verbs:
+  - '*'
+- resources:
+  - '*'
+  apiGroups:
+  - networking.istio.io
+  verbs:
+  - '*'
+- resources:
+  - '*'
+  apiGroups:
+  - rbac.istio.io
+  verbs:
+  - '*'
+- resources:
+  - '*'
+  apiGroups:
+  - security.istio.io
+  verbs:
+  - '*'
+- resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  apiGroups:
+  - admissionregistration.k8s.io
+  verbs:
+  - '*'
+- resources:
+  - customresourcedefinitions.apiextensions.k8s.io
+  - customresourcedefinitions
+  apiGroups:
+  - apiextensions.k8s.io
+  verbs:
+  - '*'
+- resources:
+  - daemonsets
+  - deployments
+  - deployments/finalizers
+  - ingresses
+  - replicasets
+  - statefulsets
+  apiGroups:
+  - apps
+  - extensions
+  verbs:
+  - '*'
+- resources:
+  - horizontalpodautoscalers
+  apiGroups:
+  - autoscaling
+  verbs:
+  - '*'
+- resources:
+  - servicemonitors
+  apiGroups:
+  - monitoring.coreos.com
+  verbs:
+  - get
+  - create
+- resources:
+  - poddisruptionbudgets
+  apiGroups:
+  - policy
+  verbs:
+  - '*'
+- resources:
+  - clusterrolebindings
+  - clusterroles
+  - roles
+  - rolebindings
+  apiGroups:
+  - rbac.authorization.k8s.io
+  verbs:
+  - '*'
+- resources:
+  - configmaps
+  - endpoints
+  - events
+  - namespaces
+  - pods
+  - persistentvolumeclaims
+  - secrets
+  - services
+  - serviceaccounts
+  apiGroups:
+  - ''
+  verbs:
+  - '*'
