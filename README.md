@@ -17,7 +17,9 @@ $ export TARGET=sink_target
 $ mkdir ${TARGET}; chmod 777 ${TARGET}
 $ curl --silent https://istio.io/operator.yaml |  
 > kustomize config cat --wrap-kind=ResourceList --wrap-version=v1 |  
-> docker run -u$(id -u) -i -v $(pwd)/${TARGET}:/tmp/${TARGET} gcr.io/kpt-functions/write-yaml:dev -d sink_dir=/tmp/${TARGET} -d overwrite=true > /dev/null
+> docker run -u$(id -u) -i -v $(pwd)/${TARGET}:/tmp/${TARGET} \
+    gcr.io/kpt-functions/write-yaml:dev                       \
+    -d sink_dir=/tmp/${TARGET} -d overwrite=true > /dev/null
 
 ```
 
