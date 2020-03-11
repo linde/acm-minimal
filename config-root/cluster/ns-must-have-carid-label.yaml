@@ -1,0 +1,21 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: ns-must-have-carid-label
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Namespace"]
+    labelSelector:
+      matchExpressions:
+      - key: opa-exemption
+        operator: NotIn
+        values: ["controlplane"]
+      - key: configmanagement.gke.io/system
+        operator: DoesNotExist
+  parameters:
+    message: "All namespaces must have an `carid` label set to your projects carid"
+    labels:
+      - key: "carid"
+  enforcementAction: dryrun
