@@ -6,8 +6,8 @@ metadata:
 spec:
   clusterName: acm-minimal
   policyController:
-    enabled: false
-    templateLibraryInstalled: false
+    enabled: true
+    templateLibraryInstalled: true
   git:
     secretType: ssh
     syncRepo: git@github.com:linde/acm-minimal.git
