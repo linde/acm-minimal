@@ -8,4 +8,4 @@ spec:
   git:
     secretType: ssh
     syncRepo: git@github.com:linde/acm-minimal.git
-    policyDir: config-root
+    syncBranch: policy-in-root
