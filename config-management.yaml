@@ -4,8 +4,9 @@ metadata:
   name: config-management
   namespace: config-management-system
 spec:
-  clusterName: acm-minimal
+  clusterName: kcc-minimal
   git:
     secretType: ssh
     syncRepo: git@github.com:linde/acm-minimal.git
     policyDir: config-root
+    syncBranch: kcc-minimal
