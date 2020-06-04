@@ -17,5 +17,3 @@ kind: PubSubTopic
 metadata:
   name: pubsubtopic-sample
   namespace: stevenlinde-kcc-project
-  annotations:
-    cnrm.cloud.google.com/project-id: stevenlinde-kcc-project-279217
