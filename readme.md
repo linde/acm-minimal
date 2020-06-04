@@ -21,7 +21,7 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID}  --member="serviceAccount:c
 gcloud iam service-accounts add-iam-policy-binding cnrm-system@${PROJECT_ID}.iam.gserviceaccount.com --member="serviceAccount:${PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager]" --role="roles/iam.workloadIdentityUser"
 
 # and then edit the PROJECT_ID in the config in the repo
-sed -i.bak 's/${PROJECT_ID?}/[project id here]/' config-root/namespaces/cnrm-system/0-cnrm-system.yaml
+sed -i.bak 's/${PROJECT_ID?}/'${PROJECT_ID}'/' config-root-unstructured/install-bundle-workload-identity/0-cnrm-system.yaml
 git commit -a -m'fixed appropriate project'   config-root/namespaces/cnrm-system/0-cnrm-system.yaml
 
 ```
