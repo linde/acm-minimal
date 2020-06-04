@@ -26,3 +26,5 @@ git commit -a -m'fixed appropriate project'   config-root/namespaces/cnrm-system
 
 ```
 
+One note: unless you intend to set access for each API specifically, be sure to "Allow Full Access to all Cloud APIs" for nodes in your node pool so your Config Connector resources will be able to actuate your GCP resource. To set this at cluster creation time, click on your node pool, ie "Default Pool", then navigate to its "Security" settings. 
+
