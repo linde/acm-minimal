@@ -8,9 +8,9 @@ spec:
   git:
     secretType: ssh
     syncRepo: git@github.com:linde/acm-minimal.git
-    syncBranch: acm-g8r
+    syncBranch: acm-g8r-ns-label
     policyDir: config-root
   policyController:
     enabled: true
-    templateLibraryInstalled: false
+    templateLibraryInstalled: true
     
