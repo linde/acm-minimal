@@ -4,5 +4,4 @@ metadata:
   name: default
   labels:
     cost-center: dev
-    foo: bar
   
