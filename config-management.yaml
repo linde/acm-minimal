@@ -13,4 +13,3 @@ spec:
   policyController:
     enabled: true
     templateLibraryInstalled: true
-    
