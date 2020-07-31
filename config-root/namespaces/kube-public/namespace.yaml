@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: kube-public
-  labels:
-    admission.gatekeeper.sh/ignore: "true"
-
- 

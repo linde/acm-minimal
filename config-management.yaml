@@ -12,10 +12,4 @@ spec:
     policyDir: config-root
   policyController:
     enabled: true
-    templateLibraryInstalled: true
-    exemptableNamespaces:
-    - config-management-system
-    - kube-node-lease
-    - kube-public
-    - kube-system
-    - local-path-storage
+    templateLibraryInstalled: false
