@@ -8,6 +8,12 @@ nomos vet --path=config-root/
 kpt fn run --dry-run config-root/ --image=gcr.io/config-management-release/policy-controller-validate:stable
 ```
 
+## for audit checks
+
+```
+kubectl get constraint -o json | jq -C '.items[]|.kind,.status.violations' | less -R
+```
+
 ## for admission checks
 
 * [install ACM](https://cloud.google.com/anthos-config-management/docs/how-to/installing)
@@ -16,11 +22,5 @@ kpt fn run --dry-run config-root/ --image=gcr.io/config-management-release/polic
 * verify it syncs with `nomos status` and verify you've `SYNCED` the commit hash.
 * see it in action with `kubectl create ns foo` (which should be rejected because it has no cost center label).
 
-
-## for audit checks
-
-```
-kubectl get constraint -o json | jq -C '.items[]|.kind,.status.violations' | less -R
-```
 
 
