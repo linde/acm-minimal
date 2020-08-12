@@ -12,7 +12,7 @@ kpt fn run --dry-run config-root/ --image=gcr.io/config-management-release/polic
 
 * [install ACM](https://cloud.google.com/anthos-config-management/docs/how-to/installing)
 * apply this repo's [config-management.yaml](config-management.yaml) resource
-* to get active enforcement, remove the `enforcementAction: dryrun` entry in [ns-should-have-cost-center.yaml](config-root/cluster/ns-should-have-cost-centere.yaml)
+* to get active enforcement, remove the `enforcementAction: dryrun` entry in [config-root/cluster/ns-should-have-cost-centere.yaml].
 
 
 ## for audit checks
