@@ -5,7 +5,13 @@ metadata:
 spec:
   enforcementAction: dryrun
   match:
-    excludedNamespaces: ["rogue"]
+    excludedNamespaces:
+    - config-management-system
+    - gatekeeper-system
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - local-path-storage
     kinds:
     - apiGroups: [""]
       kinds: ["Namespace"]
