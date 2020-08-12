@@ -22,8 +22,7 @@ spec:
             message:
               type: string
   targets:
-  - target: admission.k8s.gatekeeper.sh
-    rego: |
+  - rego: |
       package k8srequiredlabels
 
       get_message(parameters, _default) = msg {
@@ -54,4 +53,5 @@ spec:
         def_msg := sprintf("Label <%v: %v> does not satisfy allowed regex: %v", [key, value, expected.allowedRegex])
         msg := get_message(input.parameters, def_msg)
       }
-
+    target: admission.k8s.gatekeeper.sh
+status: {}
