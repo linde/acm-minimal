@@ -22,5 +22,22 @@ kubectl get constraint -o json | jq -C '.items[]|.kind,.status.violations' | les
 * verify it syncs with `nomos status` and verify you've `SYNCED` the commit hash.
 * see it in action with `kubectl create ns foo` (which should be rejected because it has no cost center label).
 
+## to persist helm template output
+
+* get a particular chart and expand it into a file in the respective [config/root/namespaces] directory
+
+```bash
+helm template  my-release bitnami/wordpress > config/root/namespaces/default/helm-bitnami-wordpress.yaml
+git add !$
+git commit -m'adding helm chart expansion'
+git push
+
+kubectl proxy &
+open 'http://127.0.0.1:8001/api/v1/namespaces/default/services/my-release-wordpress:80/proxy/'
+
+```
+
+
+
 
 
