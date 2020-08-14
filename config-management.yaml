@@ -8,7 +8,7 @@ spec:
   git:
     secretType: ssh
     syncRepo: git@github.com:linde/acm-minimal.git
-    syncBranch: acm-g8r-ns-label
+    syncBranch: acm-helm-policy-ctrlr
     policyDir: config/root/
   policyController:
     enabled: true
