@@ -1,0 +1,34 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library: 
+#   third_party/src/pod-security-policy/privileged-containers/template.yaml
+#   src.rego
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spspprivilegedcontainer
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPPrivilegedContainer
+      validation:
+        openAPIV3Schema:
+          description: Controls running of privileged containers.
+  targets:
+  - rego: |
+      package k8spspprivileged
+
+      violation[{"msg": msg, "details": {}}] {
+        c := input_containers[_]
+        c.securityContext.privileged
+        msg := sprintf("Privileged container is not allowed: %v, securityContext: %v", [c.name, c.securityContext])
+      }
+
+      input_containers[c] {
+        c := input.review.object.spec.containers[_]
+      }
+
+      input_containers[c] {
+        c := input.review.object.spec.initContainers[_]
+      }
+    target: admission.k8s.gatekeeper.sh

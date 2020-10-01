@@ -1,0 +1,55 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library: 
+#   third_party/src/pod-security-policy/host-network-ports/template.yaml
+#   src.rego
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spsphostnetworkingports
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPHostNetworkingPorts
+      validation:
+        openAPIV3Schema:
+          description: Controls usage of host networking and ports.
+          properties:
+            hostNetwork:
+              type: boolean
+            max:
+              type: integer
+            min:
+              type: integer
+  targets:
+  - rego: |
+      package k8spsphostnetworkingports
+
+      violation[{"msg": msg, "details": {}}] {
+        input_share_hostnetwork(input.review.object)
+        msg := sprintf("The specified hostNetwork and hostPort are not allowed, pod: %v. Allowed values: %v", [input.review.object.metadata.name, input.parameters])
+      }
+
+      input_share_hostnetwork(o) {
+        not input.parameters.hostNetwork
+        o.spec.hostNetwork
+      }
+
+      input_share_hostnetwork(o) {
+        hostPort := input_containers[_].ports[_].hostPort
+        hostPort < input.parameters.min
+      }
+
+      input_share_hostnetwork(o) {
+        hostPort := input_containers[_].ports[_].hostPort
+        hostPort > input.parameters.max
+      }
+
+      input_containers[c] {
+        c := input.review.object.spec.containers[_]
+      }
+
+      input_containers[c] {
+        c := input.review.object.spec.initContainers[_]
+      }
+    target: admission.k8s.gatekeeper.sh

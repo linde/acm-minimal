@@ -1,0 +1,17 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library:
+#   third_party/src/pod-security-policy/forbidden-sysctls/constraint.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPForbiddenSysctls
+metadata:
+  name: psp-forbidden-sysctls
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+  parameters:
+    forbiddenSysctls:
+    # - "*" # * may be used to forbid all sysctls
+    - kernel.*

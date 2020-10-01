@@ -1,0 +1,13 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library:
+#   third_party/src/pod-security-policy/read-only-root-filesystem/constraint.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPReadOnlyRootFilesystem
+metadata:
+  name: psp-readonlyrootfilesystem
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]

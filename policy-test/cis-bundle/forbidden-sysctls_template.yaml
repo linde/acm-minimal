@@ -1,0 +1,47 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library: 
+#   third_party/src/pod-security-policy/forbidden-sysctls/template.yaml
+#   src.rego
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spspforbiddensysctls
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPForbiddenSysctls
+      validation:
+        openAPIV3Schema:
+          description: Controls the sysctl profile used by containers.
+          properties:
+            forbiddenSysctls:
+              items:
+                type: string
+              type: array
+  targets:
+  - rego: |
+      package k8spspforbiddensysctls
+
+      violation[{"msg": msg, "details": {}}] {
+        sysctls := {x | x = input.review.object.spec.securityContext.sysctls[_][name]}
+        count(sysctls) > 0
+        input_sysctls(sysctls)
+        msg := sprintf("One of the sysctls %v is not allowed, pod: %v. Forbidden sysctls: %v", [sysctls, input.review.object.metadata.name, input.parameters.forbiddenSysctls])
+      }
+
+      # * may be used to forbid all sysctls
+      input_sysctls(sysctls) {
+        input.parameters.forbiddenSysctls[_] == "*"
+      }
+
+      input_sysctls(sysctls) {
+        forbidden_sysctls := {x | x = input.parameters.forbiddenSysctls[_]}
+        test := sysctls & forbidden_sysctls
+        count(test) > 0
+      }
+
+      input_sysctls(sysctls) {
+        startswith(sysctls[_], trim(input.parameters.forbiddenSysctls[_], "*"))
+      }
+    target: admission.k8s.gatekeeper.sh

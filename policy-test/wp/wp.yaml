@@ -16,12 +16,20 @@ metadata:
   name: wordpress
   labels:
     app: wordpress
+  annotations:
+    ## CIS FIX: addresses apparmor security profile
+    container.apparmor.security.beta.kubernetes.io/wordpress: runtime/default
+    ## CIS FIX: addresses seccomp profile
+    container.seccomp.security.alpha.kubernetes.io/wordpress: runtime/default    
 spec:
   containers:
     - image: wordpress
       name: wordpress
       securityContext:
-        privileged: true
+        privileged: false # CIS FIX: was true, addresses securityContext
+        allowPrivilegeEscalation: false # CIS FIX: was true, addresses priviledge escalation
+        runAsUser: 100    # CIS FIX: addresses absense of runAsUser, should use something in org
+        readOnlyRootFilesystem: true # CIS FIX: allow only read-only root file system access
       ports:
       - containerPort: 80
         name: wordpress

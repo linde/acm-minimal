@@ -1,0 +1,18 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library:
+#   third_party/src/pod-security-policy/capabilities/constraint.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPCapabilities
+metadata:
+  name: capabilities-demo
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+    namespaces:
+    - "production"
+  parameters:
+    allowedCapabilities: ["something"]
+    requiredDropCapabilities: ["must_drop"]

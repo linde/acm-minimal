@@ -1,0 +1,18 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library:
+#   third_party/src/pod-security-policy/fsgroup/constraint.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPFSGroup
+metadata:
+  name: psp-fsgroup
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+  parameters:
+    rule: "MayRunAs" #"MustRunAs" #"MayRunAs", "RunAsAny"
+    ranges:
+    - min: 1
+      max: 1000

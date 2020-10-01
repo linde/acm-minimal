@@ -1,0 +1,45 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library: 
+#   third_party/src/pod-security-policy/apparmor/template.yaml
+#   src.rego
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spspapparmor
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPAppArmor
+      validation:
+        openAPIV3Schema:
+          description: Controls the AppArmor profile used by containers.
+          properties:
+            allowedProfiles:
+              items:
+                type: string
+              type: array
+  targets:
+  - rego: |
+      package k8spspapparmor
+
+      violation[{"msg": msg, "details": {}}] {
+        metadata := input.review.object.metadata
+        container := input_containers[_]
+        not input_apparmor_allowed(container, metadata)
+        msg := sprintf("AppArmor profile is not allowed, pod: %v, container: %v. Allowed profiles: %v", [input.review.object.metadata.name, container.name, input.parameters.allowedProfiles])
+      }
+
+      input_apparmor_allowed(container, metadata) {
+        metadata.annotations[key] == input.parameters.allowedProfiles[_]
+        key == sprintf("container.apparmor.security.beta.kubernetes.io/%v", [container.name])
+      }
+
+      input_containers[c] {
+        c := input.review.object.spec.containers[_]
+      }
+
+      input_containers[c] {
+        c := input.review.object.spec.initContainers[_]
+      }
+    target: admission.k8s.gatekeeper.sh

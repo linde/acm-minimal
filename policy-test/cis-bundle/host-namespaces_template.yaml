@@ -1,0 +1,33 @@
+# GENERATED CODE, DO NOT EDIT.
+# Any changes should be made in the original files in the Policy Controller constraint library: 
+#   third_party/src/pod-security-policy/host-namespaces/template.yaml
+#   src.rego
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spsphostnamespace
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPHostNamespace
+      validation:
+        openAPIV3Schema:
+          description: Controls usage of host namespaces.
+  targets:
+  - rego: |
+      package k8spsphostnamespace
+
+      violation[{"msg": msg, "details": {}}] {
+        input_share_hostnamespace(input.review.object)
+        msg := sprintf("Sharing the host namespace is not allowed: %v", [input.review.object.metadata.name])
+      }
+
+      input_share_hostnamespace(o) {
+        o.spec.hostPID
+      }
+
+      input_share_hostnamespace(o) {
+        o.spec.hostIPC
+      }
+    target: admission.k8s.gatekeeper.sh

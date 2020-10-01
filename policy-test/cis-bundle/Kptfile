@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: cis-bundle
+upstream:
+  type: git
+  git:
+    commit: 6547e6628358a1792179c9e5ffa86bd801dad0c1
+    repo: sso://team/nomos-team/policy-controller-constraint-library
+    directory: /bundles/cis-v1.5.1
+    ref: 6547e6628358a1792179c9e5ffa86bd801dad0c1
