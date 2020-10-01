@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: wordpress
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: wordpress-fixed
+  labels:
+    app: wordpress
+spec:
+  containers:
+    - image: wordpress
+      name: wordpress
+      ports:
+      - containerPort: 80
+        name: wordpress
