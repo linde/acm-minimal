@@ -1,6 +1,20 @@
-locals {
-  project = "stevenlinde-demo-01"
+variable "project" {
+  type = string
 }
+
+variable "sync_repo" {
+  type = string
+}
+
+variable "sync_branch" {
+  type = string
+}
+
+variable "policy_dir" {
+  type = string
+}
+
+
 
 terraform {
   required_providers {
@@ -11,7 +25,7 @@ terraform {
   }
 }
 provider "google-beta" {
-  project = local.project
+  project = var.project
   region  = "us-central1"
   zone    = "us-central1-c"
 }
@@ -20,27 +34,11 @@ resource "random_id" "rand" {
   byte_length = 4
 }
 
-resource "google_project_service" "container" {
-  project            = local.project
-  service            = "container.googleapis.com"
-  disable_on_destroy = false
-}
-resource "google_project_service" "hub" {
-  project = local.project
-  service = "gkehub.googleapis.com"
-}
-resource "google_project_service" "acm" {
-  project = local.project
-  service = "anthosconfigmanagement.googleapis.com"
-}
 resource "google_container_cluster" "cluster" {
   provider           = google-beta
   name               = "sfl-acm-${random_id.rand.hex}"
   location           = "us-central1-a"
   initial_node_count = 4
-  depends_on = [
-    google_project_service.container
-  ]
 }
 
 resource "google_gke_hub_membership" "membership" {
@@ -51,9 +49,6 @@ resource "google_gke_hub_membership" "membership" {
       resource_link = "//container.googleapis.com/${google_container_cluster.cluster.id}"
     }
   }
-  depends_on = [
-    google_project_service.hub
-  ]
 }
 
 resource "google_gke_hub_feature_membership" "feature_member" {
@@ -66,17 +61,11 @@ resource "google_gke_hub_feature_membership" "feature_member" {
     config_sync {
       source_format = "unstructured"
       git {
-        sync_repo   = "git@github.com:linde/acm-minimal.git"
-        sync_branch = "minimal-tf-hub-wordpress"
-        policy_dir  = "config-root"
+        sync_repo = var.sync_repo
+        sync_branch = var.sync_branch
+        policy_dir = var.policy_dir
         secret_type = "none"
       }
     }
-    policy_controller {
-      enabled                    = true
-      referential_rules_enabled  = true
-      template_library_installed = true
-    }
-
   }
 }
