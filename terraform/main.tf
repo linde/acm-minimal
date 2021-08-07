@@ -54,7 +54,7 @@ resource "google_gke_hub_membership" "membership" {
 resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
-  feature    = google_gke_hub_feature.acm.name
+  feature    = "configmanagement" 
   membership = google_gke_hub_membership.membership.membership_id
   configmanagement {
     version = "1.8.0"
