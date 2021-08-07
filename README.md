@@ -24,29 +24,23 @@
 1. Enable the Google Cloud APIs that will be used for this example and also enable the new configuration management feature for our project:
 
     ```bash
-    gcloud services enable --project $PROJECT_ID  container.googleapis.com \
-                                                    gkehub.googleapis.com
+    gcloud services enable --project $PROJECT_ID  container.googleapis.com                \
+                                                    gkehub.googleapis.com                 \
                                                     anthosconfigmanagement.googleapis.com
 
     gcloud beta container hub config-management enable  --project $PROJECT_ID
     ```
 
-
-1. Create cluster using terraform:
+1. Create cluster using terraform using defaults other than the project:
 
     ```bash
-    gcloud auth application-default login
-    
     # continue in /terraform directory
     cd terraform
-    terraform init
-    terraform plan -var=project=$PROJECT_ID \
-                   -var=sync_repo=https://github.com/linde/acm-minimal.git \
-                   -var=sync_branch=minimal-tf-hub-wordpress \
-                   -var=policy_dir=config-root
 
-    terraform apply -var=project=$PROJECT_ID \
-                   -var=sync_repo=https://github.com/linde/acm-minimal.git \
-                   -var=sync_branch=minimal-tf-hub-wordpress \
-                   -var=policy_dir=config-root
+    export TF_VAR_project=$PROJECT_ID
+    
+    cd terraform
+    terraform init
+    terraform plan 
+    terraform apply 
     ```

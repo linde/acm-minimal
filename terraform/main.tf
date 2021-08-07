@@ -1,20 +1,3 @@
-variable "project" {
-  type = string
-}
-
-variable "sync_repo" {
-  type = string
-}
-
-variable "sync_branch" {
-  type = string
-}
-
-variable "policy_dir" {
-  type = string
-}
-
-
 
 terraform {
   required_providers {
@@ -54,16 +37,16 @@ resource "google_gke_hub_membership" "membership" {
 resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
-  feature    = "configmanagement" 
+  feature    = "configmanagement"
   membership = google_gke_hub_membership.membership.membership_id
   configmanagement {
     version = "1.8.0"
     config_sync {
       source_format = "unstructured"
       git {
-        sync_repo = var.sync_repo
+        sync_repo   = var.sync_repo
         sync_branch = var.sync_branch
-        policy_dir = var.policy_dir
+        policy_dir  = var.policy_dir
         secret_type = "none"
       }
     }
