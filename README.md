@@ -43,3 +43,26 @@
     terraform plan 
     terraform apply 
     ```
+1. To verify things have sync'ed, you can use `gcloud` to check status:
+
+    ```bash
+    gcloud beta container hub config-management status --project $PROJECT_ID
+    ```
+
+1. To see wordpress itself, you can use the kubectl proxy to connect to the service:
+
+    ```bash
+    # get values from cluster that was created
+    export CLUSTER_ZONE=`echo google_container_cluster.cluster.location | terraform console`
+    export CLUSTER_NAME=`echo google_container_cluster.cluster.name | terraform console | sed s/\"//g`
+    
+    # then get creditials for it and proxy to the wordpress service to see it running
+    gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE --project $PROJECT_ID
+    kubectl proxy --port 8888 &
+    
+    # curl or use the browser
+    curl http://127.0.0.1:8888/api/v1/namespaces/default/services/wordpress/proxy/wp-admin/install.php
+    
+    # dont forget to foreground the proxy again to kill it
+    fg # ctrl-c
+    ```
