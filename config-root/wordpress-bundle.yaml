@@ -56,10 +56,6 @@ spec:
       containers:
       - image: mariadb:latest
         name: mysql
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "128Mi"
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -125,10 +121,6 @@ spec:
       containers:
       - image: wordpress:4.8-apache
         name: wordpress
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "128Mi"
         env:
         - name: WORDPRESS_DB_HOST
           value: wordpress-mysql
