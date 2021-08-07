@@ -15,7 +15,6 @@
 
     ```bash
     gcloud auth login
-    gcloud auth application-default login
     gcloud projects create $PROJECT_ID --name=$PROJECT_ID --folder=$FOLDER_ID
     gcloud alpha billing projects link $PROJECT_ID --billing-account $BILLING_ACCOUNT
     gcloud config set project $PROJECT_ID
