@@ -36,12 +36,9 @@
     # continue in /terraform directory
     cd terraform
 
-    export TF_VAR_project=$PROJECT_ID
-    
-    cd terraform
-    terraform init
-    terraform plan 
-    terraform apply 
+    terraform init 
+    terraform plan -var=project=$PROJECT_ID
+    terraform apply -var=project=$PROJECT_ID
     ```
 1. To verify things have sync'ed, you can use `gcloud` to check status:
 
@@ -53,7 +50,7 @@
 
     ```bash
     # get values from cluster that was created
-    export CLUSTER_ZONE=`echo google_container_cluster.cluster.location | terraform console`
+    export CLUSTER_ZONE=`echo google_container_cluster.cluster.location | terraform console | sed s/\"//g`
     export CLUSTER_NAME=`echo google_container_cluster.cluster.name | terraform console | sed s/\"//g`
     
     # then get creditials for it and proxy to the wordpress service to see it running

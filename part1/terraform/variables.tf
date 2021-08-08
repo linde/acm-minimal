@@ -31,6 +31,6 @@ variable "sync_branch" {
 variable "policy_dir" {
   type        = string
   description = "the root directory in the repo branch that contains the resources."
-  default     = "config-root"
+  default     = "part1/config-root"
 }
   
