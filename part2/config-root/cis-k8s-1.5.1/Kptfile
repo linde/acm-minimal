@@ -1,0 +1,20 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: cis-k8s-1.5.1
+upstream:
+  type: git
+  git:
+    repo: https://github.com/linde/acm-policy-controller-library
+    directory: /bundles/cis-k8s-1.5.1
+    ref: master
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/linde/acm-policy-controller-library
+    directory: /bundles/cis-k8s-1.5.1
+    ref: master
+    commit: 582549ff092819c7323865457c423f8bcd2f592c
+info:
+  description: CIS Benchmark Kubernetes v1.5.1
