@@ -45,7 +45,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       source_format = "unstructured"
       git {
         sync_repo   = var.sync_repo
-        sync_branch = var.sync_branch
+        sync_branch = "empty-CIS"
         policy_dir  = var.policy_dir
         secret_type = "none"
       }
