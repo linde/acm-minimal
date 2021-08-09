@@ -23,7 +23,7 @@
     ```bash
     gcloud beta container hub config-management status --project $PROJECT_ID
     ```
-    Notice that in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`.
+    After a short time, notice that in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`.
 
 
 1. Now let's enforce some guardrails, in this case [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks).
