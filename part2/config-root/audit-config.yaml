@@ -12,7 +12,4 @@ spec:
         "gatekeeper-system"
       ]
       processes: ["audit"]
-    
-    
       
-    
