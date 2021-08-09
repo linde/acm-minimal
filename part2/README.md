@@ -2,13 +2,13 @@
 
 ## Part 2
 
-1. Set a variables for the project from [../part1]. We will re-use that project but create a new cluster since we cleaned up at the end of the first section.
+1. Set a variables for the project from [part1](../part1). We will re-use that project but create a new cluster since we cleaned up at the end of the first section.
 
     ```bash
     PROJECT_ID = [PROJECT_ID]
     ```
 
-1. As before, cluster using terraform using defaults other than the project. The main difference in the [./terraform] files is that we turn on [PolicyController](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) and also install the build in [Policy Libary](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library). 
+1. As before, cluster using terraform using defaults other than the project. The main difference in the [terraform] files is that we turn on [PolicyController](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) and also install the build in [Policy Libary](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library). 
 
     ```bash
     # continue in /terraform directory
@@ -28,16 +28,16 @@
     After a short time, in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`. 
     
 
-1. One other difference from [../part1] is that in the [./config-root/cis-k8s-1.5.1] directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev/](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster. 
+1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev/](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster. 
 
-    To see the audit status first we get credentials for `kubectl` in the same way we did this in [../part1]:
+    To see the audit status first we get credentials for `kubectl` in the same way we did this in [part1](../part1):
 
     ```bash
     # get values from cluster that was created
     export CLUSTER_ZONE=`echo google_container_cluster.cluster.location | terraform console | sed s/\"//g`
     export CLUSTER_NAME=`echo google_container_cluster.cluster.name | terraform console | sed s/\"//g`
 
-    # then get creditials for it and proxy to the wordpress service to see it running
+    # then get creditials for it
     gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE --project $PROJECT_ID
 
     ```
