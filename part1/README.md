@@ -20,19 +20,22 @@
     gcloud config set project $PROJECT_ID
     ```
 
-1. Enable the Google Cloud APIs that will be used for this example and also enable the new configuration management feature for our project:
+1. Enable the Google Cloud APIs that will be used for this example and also enable the new configuration management feature for your project:
 
     ```bash
     gcloud services enable --project $PROJECT_ID  container.googleapis.com                \
                                                     gkehub.googleapis.com                 \
                                                     anthosconfigmanagement.googleapis.com
 
-    gcloud beta container hub config-management enable  --project $PROJECT_ID
+    gcloud alpha container hub config-management enable  --project $PROJECT_ID
     ```
 
 1. Create cluster using terraform using defaults other than the project:
 
     ```bash
+    # obtain user access credentials to use for Terraform commands
+    gcloud auth application-default login
+
     # continue in /terraform directory
     cd terraform
 
@@ -40,11 +43,13 @@
     terraform plan -var=project=$PROJECT_ID
     terraform apply -var=project=$PROJECT_ID
     ```
+
 1. To verify things have sync'ed, you can use `gcloud` to check status:
 
     ```bash
     gcloud beta container hub config-management status --project $PROJECT_ID
     ```
+
     In the output, notice that the `Status` will eventually show as `SYNCED` and the `Last_Synced_Token` will match the repo hash.
 
 1. To see wordpress itself, you can use the kubectl proxy to connect to the service:
