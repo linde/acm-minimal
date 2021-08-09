@@ -8,7 +8,7 @@
     PROJECT_ID = [PROJECT_ID]
     ```
 
-1. As before, cluster using terraform using defaults other than the project. The main difference in the [terraform] files is that we turn on [PolicyController](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) and also install the build in [Policy Libary](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library). 
+1. As before, cluster using terraform using defaults other than the project. The main difference in the [terraform](terraform) files is that we turn on [PolicyController](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) and also install the build in [Policy Libary](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library). 
 
     ```bash
     # continue in /terraform directory
@@ -28,7 +28,7 @@
     After a short time, in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`. 
     
 
-1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev/](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster. 
+1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster. 
 
     To see the audit status first we get credentials for `kubectl` in the same way we did this in [part1](../part1):
 
