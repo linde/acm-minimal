@@ -23,9 +23,25 @@
     ```bash
     gcloud beta container hub config-management status --project $PROJECT_ID
     ```
-    After a short time, notice that in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`.
+    After a short time, in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`.
 
+1. One other difference from [../part1] is that in the [./config-root/cis-k8s-1.5.1] directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev/](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster. 
 
-1. Now let's enforce some guardrails, in this case [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks).
+    To see the audit status first we get credentials for `kubectl` in the same way we did this in [../part1]:
 
-TODO use `kpt` to get the bundle...
+    ```bash
+    # get values from cluster that was created
+    export CLUSTER_ZONE=`echo google_container_cluster.cluster.location | terraform console | sed s/\"//g`
+    export CLUSTER_NAME=`echo google_container_cluster.cluster.name | terraform console | sed s/\"//g`
+
+    # then get creditials for it and proxy to the wordpress service to see it running
+    gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE --project $PROJECT_ID
+
+    ```
+    Now, let's look at the violations in the status of the constraints we have active. One handy way to do this is to dump the constraints in json so we can filter for violations using `jq`. We see lots to clear up here!
+
+    ```bash
+    kubectl get constraint -o json | jq -C '.items[]| select(.status.violations)| .kind,.status.violations'
+    ```
+    Seems like there is a LOT to clean up!
+

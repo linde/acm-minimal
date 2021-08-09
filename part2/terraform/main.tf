@@ -54,6 +54,7 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       enabled                    = true
       template_library_installed = true
       referential_rules_enabled  = true
+      exemptable_namespaces = [ "kube-system", "config-management-system", "config-management-monitoring", "gatekeeper-system"]
     }
   }
 }
