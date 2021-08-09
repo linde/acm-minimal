@@ -47,7 +47,7 @@
 1. To verify things have sync'ed, you can use `gcloud` to check status:
 
     ```bash
-    gcloud beta container hub config-management status --project $PROJECT_ID
+    gcloud alpha container hub config-management status --project $PROJECT_ID
     ```
 
     In the output, notice that the `Status` will eventually show as `SYNCED` and the `Last_Synced_Token` will match the repo hash.
