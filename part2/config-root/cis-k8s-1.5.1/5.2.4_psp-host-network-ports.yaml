@@ -6,7 +6,7 @@ metadata: # kpt-merge: /psp-host-network-ports
     # This constraint is not certified by CIS.
     description: "Restricts containers from rnuning with the `hostNetwork` flag set to `true`."
 spec:
-  enforcementAction: dryrun # {"$kpt-set":"enforcementAction"}
+  enforcementAction: dryrun # kpt-set: ${enforcementAction}
   match:
     kinds:
     - apiGroups: [""]

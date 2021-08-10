@@ -6,4 +6,4 @@ metadata: # kpt-merge: /pods-require-security-context
     # This constraint is not certified by CIS.
     description: "Requires that Pods must have a `securityContext` defined."
 spec:
-  enforcementAction: dryrun # {"$kpt-set":"enforcementAction"}
+  enforcementAction: dryrun # kpt-set: ${enforcementAction}
