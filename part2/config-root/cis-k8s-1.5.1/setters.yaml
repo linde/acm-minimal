@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata: # kpt-merge: /setters
-  name: setters
-data:
-  enforcementAction: dryrun
