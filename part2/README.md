@@ -32,7 +32,7 @@
 
     After a short time, in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`.
 
-1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster.
+1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory. This is a bundle of Policy Controller constraints that were pulled into the repo from [acm-policy-controller-library repo](https://github.com/GoogleCloudPlatform/acm-policy-controller-library/tree/master/bundles/cis-k8s-1.5.1) using `kpt pkg get` command. Kpt is a helpful kubernetes config tool documented at [kpt.dev](https://kpt.dev/). We'll use Kpt tool directly in part3 of this tutorial. The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster.
 
     To see the audit status first we get credentials for `kubectl` in the same way we did this in [part1](../part1):
 
