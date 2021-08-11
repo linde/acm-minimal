@@ -2,7 +2,7 @@
 
 ## Part 2
 
-1. Set a variables for the project from [part1](../part1). We will re-use that project but create a new cluster since we cleaned up at the end of the first section.
+1. Set a variables for the project from [part1](../part1). We will re-use that project but create a new cluster since we cleaned up at the end of the first section. If you are working in a different project, enable required GCP APIs, as described in [part1/README.md](../part1/README.md). 
 
     ```bash
     PROJECT_ID = [PROJECT_ID]
@@ -11,6 +11,9 @@
 1. As before, cluster using terraform using defaults other than the project. The main difference in the [terraform](terraform) files is that we turn on [PolicyController](https://cloud.google.com/anthos-config-management/docs/concepts/policy-controller) and also install the build in [Policy Libary](https://cloud.google.com/anthos-config-management/docs/reference/constraint-template-library). 
 
     ```bash
+    # obtain user access credentials to use for Terraform commands
+    gcloud auth application-default login
+
     # continue in /terraform directory
     cd terraform
 
@@ -18,17 +21,18 @@
     terraform plan -var=project=$PROJECT_ID
     terraform apply -var=project=$PROJECT_ID
     ```
+
 1. To verify things have sync'ed and the policy controller is installed, you can again use `gcloud` to check status:
 
     ```bash
-    gcloud beta container hub config-management status --project $PROJECT_ID
+    gcloud alpha container hub config-management status --project $PROJECT_ID
     ```
-    As things initialize, you may see a few transient `error: KNV1021: No CustomResourceDefinition is defined` messages. This occurs when constraints from the repo are sync'ed before Policy Controller has had a chance to load the appropriate template from the policy library. It will eventually reconcile.
-    
-    After a short time, in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`. 
-    
 
-1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster. 
+    As things initialize, you may see a few transient `error: KNV1021: No CustomResourceDefinition is defined` messages. This occurs when constraints from the repo are sync'ed before Policy Controller has had a chance to load the appropriate template from the policy library. It will eventually reconcile.
+
+    After a short time, in addition to the `Status` showing as `SYNCED` and the `Last_Synced_Token` matching the repo, there should also be a value of `INSTALLED` for `Policy_Controller`.
+
+1. One difference you may notice from [part1](../part1) is that in the [config-root/cis-k8s-1.5.1](config-root/cis-k8s-1.5.1) directory, there are more files -- this is a bundle of Policy Controller constraints that were pulled into the repo via `kpt`, a helpful kubernetes config tool documented at [kpt.dev](https://kpt.dev/). The goal of this bundle is to audit and enforce [CIS Benchmarks for Kubernetes](https://cloud.google.com/kubernetes-engine/docs/concepts/cis-benchmarks). At the moment, they have been deployed in `dryrun` mode so we can use them to audit the cluster.
 
     To see the audit status first we get credentials for `kubectl` in the same way we did this in [part1](../part1):
 
@@ -41,10 +45,12 @@
     gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE --project $PROJECT_ID
 
     ```
-    Now, let's look at the violations in the status of the constraints we have active. One handy way to do this is to dump the constraints in json so we can filter for violations using `jq`. We see lots to clear up here!
+
+    Now, let's look at the violations in the status of the constraints we have active. One handy way to do this is to dump the constraints in json so we can filter for violations using `jq`.
 
     ```bash
     kubectl get constraint -o json | jq -C '.items[]| select(.status.violations)| .kind,.status.violations'
     ```
+
     Seems like there is a LOT to clean up!
 
