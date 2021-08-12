@@ -113,7 +113,7 @@ spec:
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  nampespace: wp
+  namespace: wp
   name: wordpress
   labels:
     app: wordpress
