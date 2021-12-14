@@ -56,30 +56,11 @@ gcloud services enable \
  ***/
 
 
-variable "project" {
-  type        = string
-  description = "the GCP project where the cluster will be created"
-}
-variable "region" {
-  type        = string
-  description = "the GCP region where the cluster will be created"
-  default     = "us-central1"
-}
-variable "zone" {
-  type        = string
-  description = "the GCP zone where the cluster will be created"
-  default     = "us-central1-c"
-}
-
-output "gcloud_kubecontext" {
-  value = "gcloud container clusters get-credentials ${google_container_cluster.cluster.id} --zone ${var.zone} --project ${var.project}"
-}
 
 terraform {
   required_providers {
     google-beta = {
       source = "hashicorp/google-beta"
-      ##version = "3.73.0"
     }
   }
 }
@@ -98,7 +79,7 @@ resource "google_container_cluster" "cluster" {
   provider           = google-beta
   name               = "sfl-acm-${random_id.rand.hex}"
   location           = var.zone
-  initial_node_count = 6
+  initial_node_count = 10
 }
 
 resource "google_gke_hub_membership" "membership" {
