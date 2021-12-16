@@ -1,4 +1,3 @@
-
 module "asm" {
   source = "terraform-google-modules/kubernetes-engine/google//modules/asm"
 
@@ -7,7 +6,5 @@ module "asm" {
   location         = var.zone
   project_id       = var.project
   enable_all       = true
-
+  options = ["cni-gcp"]
 }
-
-
