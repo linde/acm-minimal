@@ -9,6 +9,12 @@ export PROJECT=[your project]
 export FOLDER=[your folder]
 export BILLING_ACCOUNT=[your billing account]
 
+
+# as necessary
+sudo apt install google-cloud-sdk
+sudo apt install google-cloud-sdk-gke-gcloud-auth-plugin 
+
+
 gcloud auth application-default login
 
 # create a new project under the folder and enable necessary APIs
