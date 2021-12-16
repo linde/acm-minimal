@@ -23,26 +23,10 @@ gcloud auth application-default login
 
 gcloud projects create $PROJECT --folder=$FOLDER
 gcloud beta billing projects link $PROJECT --billing-account $BILLING_ACCOUNT
-gcloud services enable --project=$PROJECT gkehub.googleapis.com anthosconfigmanagement.googleapis.com container.googleapis.com
 
-
-terraform init
-terraform plan --var project=$PROJECT
-terraform apply -auto-approve -var project=$PROJECT
-
-# check status of its sync via
-gcloud beta container hub config-management status --project=$PROJECT
-
-# check violation status by
-
-kubectl get constraints
-kubectl get constraints -o=jsonpath='{..violations}' | jq . 
-
-
-# base on https://cloud.google.com/service-mesh/docs/on-premises-install, these are all of the APIs we need to enable for ASM:
-
-gcloud services enable \
+gcloud services enable --project=$PROJECT \
   anthos.googleapis.com \
+  anthosconfigmanagement.googleapis.com \
   cloudtrace.googleapis.com \
   cloudresourcemanager.googleapis.com \
   container.googleapis.com \
@@ -59,7 +43,19 @@ gcloud services enable \
   stackdriver.googleapis.com \
   sts.googleapis.com
 
- ***/
+terraform init
+terraform plan --var project=$PROJECT
+terraform apply -auto-approve -var project=$PROJECT
+
+# check status of its sync via
+gcloud beta container hub config-management status --project=$PROJECT
+
+# check violation status by
+
+kubectl get constraints
+kubectl get constraints -o=jsonpath='{..violations}' | jq . 
+
+***/
 
 
 
