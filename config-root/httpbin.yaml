@@ -26,12 +26,6 @@ metadata:
 # httpbin service
 ##################################################################################################
 apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: httpbin
-  namespace: httpbin
----
-apiVersion: v1
 kind: Service
 metadata:
   name: httpbin
@@ -41,8 +35,7 @@ metadata:
     service: httpbin
 spec:
   ports:
-  - name: http
-    port: 80
+  - port: 80
   selector:
     app: httpbin
 ---
