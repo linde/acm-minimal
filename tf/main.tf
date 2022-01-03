@@ -50,16 +50,16 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       source_format = "unstructured"
       git {
         sync_repo      = "https://github.com/linde/acm-minimal.git"
-        sync_branch    = "acm-pccl-cis-asm"
+        sync_branch    = "httpbin"
         policy_dir     = "config-root"
         secret_type    = "none"
         sync_wait_secs = "60"
       }
     }
     policy_controller {
-      enabled                    = true
-      referential_rules_enabled  = true
-      template_library_installed = true
+      enabled                    = false
+      referential_rules_enabled  = false
+      template_library_installed = false
     }
 
   }
