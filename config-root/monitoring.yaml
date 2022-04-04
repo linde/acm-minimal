@@ -84,8 +84,7 @@ spec:
     targetPort: web
   selector:
     app: prometheus
-    prometheus: acm
---- 
+    prometheus: acm 
   endpoints:
   - port: metrics
     interval: 10s 
