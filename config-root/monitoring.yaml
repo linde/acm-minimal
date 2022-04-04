@@ -88,11 +88,11 @@ spec:
   endpoints:
   - port: metrics
     interval: 10s 
----
+--- 
 apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
+kind: ServiceMonitor
 metadata:
-  name: acm-pod
+  name: acm-service
   namespace: monitoring
   labels:
     prometheus: config-management
@@ -102,7 +102,9 @@ spec:
       monitored: "true"
   namespaceSelector:
     matchNames:
-    - gatekeeper-system
-  podMetricsEndpoints:
+    # If you are using multi-repo mode, change
+    # config-management-system to config-management-monitoring
+    - config-management-system 
+  endpoints:
   - port: metrics
     interval: 10s 
