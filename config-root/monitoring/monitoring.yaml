@@ -104,7 +104,7 @@ spec:
     matchNames:
     # If you are using multi-repo mode, change
     # config-management-system to config-management-monitoring
-    - config-management-system 
+    - config-management-monitoring 
   endpoints:
   - port: metrics
     interval: 10s 
