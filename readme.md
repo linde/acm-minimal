@@ -36,23 +36,12 @@ gcloud projects create $PROJECT --folder=$FOLDER
 gcloud beta billing projects link $PROJECT --billing-account $BILLING_ACCOUNT
 
 gcloud services enable --project=$PROJECT \
-  anthos.googleapis.com \
   anthosconfigmanagement.googleapis.com \
-  cloudtrace.googleapis.com \
-  cloudresourcemanager.googleapis.com \
-  container.googleapis.com \
-  compute.googleapis.com \
-  gkeconnect.googleapis.com \
-  gkehub.googleapis.com \
-  iam.googleapis.com \
-  iamcredentials.googleapis.com \
-  logging.googleapis.com \
-  meshca.googleapis.com \
-  meshtelemetry.googleapis.com \
-  meshconfig.googleapis.com \
   monitoring.googleapis.com \
-  stackdriver.googleapis.com \
-  sts.googleapis.com
+  container.googleapis.com \
+  gkehub.googleapis.com \
+
+  
 ```
 
 ## now, go ahead and apply the config
