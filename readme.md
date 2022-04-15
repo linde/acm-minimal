@@ -1,12 +1,11 @@
 
-
-
-# Simple barebones GKE with ACM (configsync, policy controller)
+# Minimal GKE with ACM that can send Metrics to Cloud Monitoring
 
 The following is a minimal terraform example to stand up a cluster and install 
 configsync using config from [../config-root] and enforce policies via Policy
 Controller.
 
+Additionally, it has the default GKE service account (actually the GCE service account) configured so it can post metrics to Cloud Monitoring.
 
 ## create a project, values below are in experimental-anthos and joonix billing account
 
@@ -34,13 +33,6 @@ we enable APIs for ASM as well for subsequent explorations.
 ```bash
 gcloud projects create $PROJECT --folder=$FOLDER
 gcloud beta billing projects link $PROJECT --billing-account $BILLING_ACCOUNT
-
-gcloud services enable --project=$PROJECT \
-  anthosconfigmanagement.googleapis.com \
-  monitoring.googleapis.com \
-  container.googleapis.com \
-  gkehub.googleapis.com \
-
   
 ```
 
