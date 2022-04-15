@@ -50,10 +50,10 @@ resource "google_gke_hub_feature_membership" "feature_member" {
       source_format = "unstructured"
       git {
         sync_repo      = "https://github.com/linde/acm-minimal.git"
-        sync_branch    = "httpbin-poco"
+        sync_branch    = "poco-mon"
         policy_dir     = "config-root"
         secret_type    = "none"
-        sync_wait_secs = "60"
+        sync_wait_secs = "30"
       }
     }
     policy_controller {
