@@ -2,10 +2,10 @@
 # Minimal GKE with ACM that can send Metrics to Cloud Monitoring
 
 The following is a minimal terraform example to stand up a cluster and install 
-configsync using config from [../config-root] and enforce policies via Policy
+configsync using config from [config-root](./config-root) and enforce policies via Policy
 Controller.
 
-Additionally, it has the default GKE service account (actually the GCE service account) configured so it can post metrics to Cloud Monitoring.
+Additionally, it enables IAM for the GCE service account so it can post metrics to Cloud Monitoring.
 
 ## create a project, values below are in experimental-anthos and joonix billing account
 
