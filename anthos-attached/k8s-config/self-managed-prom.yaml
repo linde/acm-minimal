@@ -14,7 +14,12 @@
 
 ## this came from https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.3.1/examples/prometheus.yaml
 ## following docuementation here: https://cloud.google.com/stackdriver/docs/managed-prometheus/setup-unmanaged#gmp-outside-gcp
-
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gmp-test
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -165,14 +170,15 @@ data:
       static_configs:
       - targets: ['localhost:9090']
 
+    # linde updated this below to change label to match poco: monitored:true
     # Scrape pods with label app=prom-example across all namespaces
     # on the port named 'metrics'.
     - job_name: prom-example
       kubernetes_sd_configs:
       - role: pod
       relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        regex: prom-example
+      - source_labels: [__meta_kubernetes_pod_label_monitored]
+        regex: true
         action: keep
       - source_labels: [__meta_kubernetes_namespace]
         target_label: namespace
