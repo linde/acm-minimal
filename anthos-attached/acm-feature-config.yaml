@@ -1,0 +1,14 @@
+applySpecVersion: 1
+spec:
+  configSync:
+    enabled: true
+    policyDir: .
+    secretType: none
+    sourceFormat: unstructured
+    syncBranch: main
+    syncRepo: https://github.com/GoogleCloudPlatform/acm-essentials.git
+    syncWait: 15
+  policyController:
+    enabled: true
+    referentialRulesEnabled: true
+    templateLibraryInstalled: true
