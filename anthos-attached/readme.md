@@ -70,3 +70,13 @@ kubectl delete -n gmp-test pod prometheus-test-0
 
 In particular, the example [prometheus config](k8s-config/self-managed-prom.yaml) has been setup to scrape metrics that Anthos Config Management Policy Controller. it is configured to scapre pods that have the `monitored: "true"` label, as Policy Controler does.  You can see violations in the cluster via this query for `gatekeeper_violations` in the GCP [Managed Service for Prometheus](https://pantheon.corp.google.com/monitoring/prometheus?pageState=%7B%22promqlQuery%22:%22gatekeeper_violations%22%7D&). 
 
+
+# Clean up
+
+```bash
+
+gcloud container hub memberships unregister   kind-acm-metrics --context=kind-${KIND_CLUSTER_NAME}
+kind delete cluster --name=${KIND_CLUSTER_NAME}
+
+
+```

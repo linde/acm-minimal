@@ -15,22 +15,13 @@ export FOLDER=[your folder]
 export BILLING_ACCOUNT=[your billing account]
 ```
 
-# login to GCP, installing gcloud as necessary
+# login to GCP, installing gcloud as necessary and creating a fresh project
 ```bash
 sudo apt install google-cloud-sdk
 sudo apt install google-cloud-sdk-gke-gcloud-auth-plugin 
 
 gcloud auth application-default login
-```
 
-# create a new project under the folder and enable necessary APIs
-
-we could do this all in terraform too, but this way the example below is minimal
-and only focused on the hub, configmanagement and policy controller. Additionally
-we enable APIs for ASM as well for subsequent explorations.
-
-
-```bash
 gcloud projects create $PROJECT --folder=$FOLDER
 gcloud beta billing projects link $PROJECT --billing-account $BILLING_ACCOUNT
   
@@ -56,3 +47,4 @@ gcloud beta container hub config-management status --project=$PROJECT
 kubectl get constraints
 kubectl get constraints -o=jsonpath='{..violations}' | jq . 
 ```
+
