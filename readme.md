@@ -35,6 +35,9 @@ terraform plan --var project=$PROJECT
 terraform apply -auto-approve -var project=$PROJECT
 ```
 
+
+> if you get an error along the lines of `Error: Error creating Feature: Resource already exists` for `google_gke_hub_feature.acm`, then this resource is managed elsewhere. You can either comment out the block for this resource, or import it to start managing it. The latter can be accomplished via `terraform import  --var project=$PROJECT google_gke_hub_feature.acm projects/${PROJECT}/locations/global/features/configmanagement`.
+
 ## check status of its sync via
 ```bash
 gcloud beta container hub config-management status --project=$PROJECT
@@ -47,4 +50,8 @@ gcloud beta container hub config-management status --project=$PROJECT
 kubectl get constraints
 kubectl get constraints -o=jsonpath='{..violations}' | jq . 
 ```
+
+## you can now also see ConfigSync metrics
+
+Navigate to the [Metrics Explorer](https://pantheon.corp.google.com/monitoring/metrics-explorer) and filter using the term `declared_resources`.
 

@@ -43,7 +43,8 @@ resource "google_gke_hub_feature" "acm" {
 resource "google_gke_hub_feature_membership" "feature_member" {
   provider   = google-beta
   location   = "global"
-  feature    = google_gke_hub_feature.acm.name
+  feature    = "configmanagement" ## google_gke_hub_feature.acm.name
+
   membership = google_gke_hub_membership.membership.membership_id
   configmanagement {
     config_sync {
