@@ -5,7 +5,7 @@ spec:
     policyDir: .
     secretType: none
     sourceFormat: unstructured
-    syncBranch: main
+    syncBranch: kubevirt-acm
     syncRepo: https://github.com/GoogleCloudPlatform/acm-essentials.git
     syncWait: 15
   policyController:

@@ -1,57 +1,46 @@
 
-# Minimal GKE with ACM that can send Metrics to Cloud Monitoring
 
-The following is a minimal terraform example to stand up a cluster and install 
-configsync using config from [config-root](./config-root) and enforce policies via Policy
-Controller.
+## Overview
 
-Additionally, it enables IAM for the GCE service account so it can post metrics to Cloud Monitoring.
+The follow steps can be used to create an example cluster (in this case, via [kind](https://kind.sigs.k8s.io/)) and register it with an Anthos Fleet to install ACM with a repo that loads [kubevirt](https://kubevirt.io/). Essentially, this automates this turorial for kubevirt on [kind](https://kubevirt.io/quickstart_kind/).
 
-## create a project, values below are in experimental-anthos and joonix billing account
+
+## Create and register a cluster and install ACM
 
 ```bash
-export PROJECT=[your project]
-export FOLDER=[your folder]
-export BILLING_ACCOUNT=[your billing account]
+
+PROJECT=[stevenlinde-fleet-tf-mon-01]
+KIND_CLUSTER_NAME=[acm-kubevirt]
+
+MEMBERSHIP=kind-${KIND_CLUSTER_NAME}
+kind create cluster --name=${KIND_CLUSTER_NAME}
+
+gcloud container hub memberships register ${MEMBERSHIP} \
+   --project=stevenlinde-fleet-tf-mon-01 \
+   --context=kind-${KIND_CLUSTER_NAME} \
+   --kubeconfig=${HOME}/.kube/config \
+   --enable-workload-identity \
+   --has-private-issuer
+
+gcloud alpha container hub config-management enable --project=$PROJECT
+
+gcloud alpha container hub config-management apply --config=acm-feature-config.yaml \
+    --membership=${MEMBERSHIP} \
+    --project=$PROJECT
+
 ```
 
-# login to GCP, installing gcloud as necessary and creating a fresh project
-```bash
-sudo apt install google-cloud-sdk
-sudo apt install google-cloud-sdk-gke-gcloud-auth-plugin 
+## Explore your new VM
 
-gcloud auth application-default login
-
-gcloud projects create $PROJECT --folder=$FOLDER
-gcloud beta billing projects link $PROJECT --billing-account $BILLING_ACCOUNT
-  
-```
-
-## now, go ahead and apply the config
-
-```bash
-terraform init
-terraform plan --var project=$PROJECT
-terraform apply -auto-approve -var project=$PROJECT
-```
+TODO(stevenlinde) -- add details on `virtctl`.
 
 
-> if you get an error along the lines of `Error: Error creating Feature: Resource already exists` for `google_gke_hub_feature.acm`, then this resource is managed elsewhere. You can either comment out the block for this resource, or import it to start managing it. The latter can be accomplished via `terraform import  --var project=$PROJECT google_gke_hub_feature.acm projects/${PROJECT}/locations/global/features/configmanagement`.
-
-## check status of its sync via
-```bash
-gcloud beta container hub config-management status --project=$PROJECT
-```
-
-
-## check violation status by
+## Clean up
 
 ```bash
-kubectl get constraints
-kubectl get constraints -o=jsonpath='{..violations}' | jq . 
+
+gcloud container hub memberships unregister   kind-acm-metrics --context=kind-${KIND_CLUSTER_NAME}
+kind delete cluster --name=${KIND_CLUSTER_NAME}
+
+
 ```
-
-## you can now also see ConfigSync metrics
-
-Navigate to the [Metrics Explorer](https://pantheon.corp.google.com/monitoring/metrics-explorer) and filter using the term `declared_resources`.
-
