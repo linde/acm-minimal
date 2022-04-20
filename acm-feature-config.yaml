@@ -2,11 +2,11 @@ applySpecVersion: 1
 spec:
   configSync:
     enabled: true
-    policyDir: .
+    policyDir: config-root
     secretType: none
     sourceFormat: unstructured
     syncBranch: kubevirt-acm
-    syncRepo: https://github.com/GoogleCloudPlatform/acm-essentials.git
+    syncRepo: https://github.com/linde/acm-minimal.git
     syncWait: 15
   policyController:
     enabled: true

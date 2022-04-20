@@ -32,7 +32,16 @@ gcloud alpha container hub config-management apply --config=acm-feature-config.y
 
 ## Explore your new VM
 
-TODO(stevenlinde) -- add details on `virtctl`.
+Once the cluster has had a chance to sync and kubevirt to install, you can use `virtctl` as described in this [tutorial section](https://kubevirt.io/quickstart_kind/#virtctl) to start and interact with your VM.
+
+```bash
+
+virtctl start testvm
+kubectl get virtualmachine testvm
+
+
+```
+
 
 
 ## Clean up
