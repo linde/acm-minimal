@@ -36,13 +36,21 @@ Once the cluster has had a chance to sync and kubevirt to install, you can use `
 
 ```bash
 
-virtctl start testvm
-kubectl get virtualmachine testvm
+kubectl get vm testvm -n kubevirt
+
+virtctl start testvm -n kubevirt
+kubectl get vmi testvm -n kubevirt
+
+virtctl console  testvm -n kubevirt
+
+# ...
+# ^]
+
+virtctl restart testvm -n kubevirt
+virtctl stop testvm -n kubevirt
 
 
 ```
-
-
 
 ## Clean up
 
