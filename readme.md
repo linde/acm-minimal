@@ -30,6 +30,11 @@ gcloud alpha container hub config-management apply --config=acm-feature-config.y
 
 ```
 
+## Problem area
+
+At the moment, on my enviroment at this point i can apply [vm.yaml](vm.yaml) directly, but it doesnt work when sync'ed via ACM/ConfigSync.
+
+
 ## Explore your new VM
 
 Once the cluster has had a chance to sync and kubevirt to install, you can use `virtctl` as described in this [tutorial section](https://kubevirt.io/quickstart_kind/#virtctl) to start and interact with your VM.
