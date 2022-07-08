@@ -28,6 +28,19 @@ gcloud alpha container hub config-management apply --config=acm-feature-config.y
     --membership=${MEMBERSHIP} \
     --project=$PROJECT
 
+## assuming you want to use connect with this, apply the following to setup RBAC
+## this is odd because you can reach the cluster directly, but cool for remote admin
+
+gcloud beta container fleet memberships generate-gateway-rbac  \
+    --membership=${MEMBERSHIP} \
+    --role=clusterrole/cluster-admin  \
+    --users=$(gcloud config get account) \
+    --project=${PROJECT}  \
+    --kubeconfig=${HOME}/.kube/config \
+    --context=kind-${KIND_CLUSTER_NAME}  \
+    --apply
+    
+
 ```
 
 ## Problem area
