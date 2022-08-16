@@ -5,28 +5,24 @@
 The follow steps can be used to create an example cluster (in this case, via [kind](https://kind.sigs.k8s.io/)) and register it with an Anthos Fleet to install ACM with a repo that loads [kubevirt](https://kubevirt.io/). Essentially, this automates this turorial for kubevirt on [kind](https://kubevirt.io/quickstart_kind/).
 
 
-## Create and register a cluster and install ACM
+## Create, register a cluster (and enable gateway RBAC), and install ACM
 
 ```bash
 
 PROJECT=[stevenlinde-fleet-tf-mon-01]
 KIND_CLUSTER_NAME=[acm-kubevirt]
+KIND_CONTEXT_NAME=kind-${KIND_CLUSTER_NAME}
+MEMBERSHIP=${KIND_CONTEXT_NAME}
 
-MEMBERSHIP=kind-${KIND_CLUSTER_NAME}
+
 kind create cluster --name=${KIND_CLUSTER_NAME}
 
 gcloud container hub memberships register ${MEMBERSHIP} \
-   --project=stevenlinde-fleet-tf-mon-01 \
+   --project=${PROJECT}  \
    --context=kind-${KIND_CLUSTER_NAME} \
    --kubeconfig=${HOME}/.kube/config \
    --enable-workload-identity \
    --has-private-issuer
-
-gcloud alpha container hub config-management enable --project=$PROJECT
-
-gcloud alpha container hub config-management apply --config=acm-feature-config.yaml \
-    --membership=${MEMBERSHIP} \
-    --project=$PROJECT
 
 ## assuming you want to use connect with this, apply the following to setup RBAC
 ## this is odd because you can reach the cluster directly, but cool for remote admin
@@ -37,9 +33,15 @@ gcloud beta container fleet memberships generate-gateway-rbac  \
     --users=$(gcloud config get account) \
     --project=${PROJECT}  \
     --kubeconfig=${HOME}/.kube/config \
-    --context=kind-${KIND_CLUSTER_NAME}  \
+    --context=${KIND_CONTEXT_NAME}  \
     --apply
     
+gcloud alpha container hub config-management enable --project=$PROJECT
+
+gcloud alpha container hub config-management apply --config=acm-feature-config.yaml \
+    --membership=${MEMBERSHIP} \
+    --project=$PROJECT
+
 
 ```
 
