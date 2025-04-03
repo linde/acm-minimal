@@ -1,0 +1,11 @@
+apiVersion: configsync.gke.io/v1beta1
+kind: RootSync
+metadata:
+  name: mco-root-sync
+  namespace: config-management-system
+spec:
+  sourceFormat: unstructured
+  git:
+    repo: https://github.com/nephio-test/test-edge-01
+    branch: mco
+    auth: none
