@@ -4,6 +4,6 @@ metadata:
   namespace: default
   name: dependant
   annotations:
-    config.kubernetes.io/depends-on: /namespaces/default/configmap/marker
+    config.kubernetes.io/depends-on: /namespaces/default/ConfigMap/marker
 data:
   dependant-on-other: "true"
