@@ -9,3 +9,4 @@ spec:
     repo: https://github.com/nephio-test/test-edge-01
     branch: mco
     auth: none
+    dir: config-root
