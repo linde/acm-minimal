@@ -4,6 +4,7 @@ metadata:
   namespace: default
   name: dependant
   annotations:
-    config.kubernetes.io/depends-on: /namespaces/default/ConfigMap/marker
+    # the "other" configmap doesnt exist in this repo, it is added by other means
+    config.kubernetes.io/depends-on: /namespaces/default/ConfigMap/other
 data:
   dependant-on-other: "true"
