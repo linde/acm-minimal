@@ -6,7 +6,7 @@ metadata:
 spec:
   sourceFormat: unstructured
   git:
-    repo: https://github.com/nephio-test/test-edge-01
+    repo: https://github.com/linde/acm-minimal.git
     branch: mco
     auth: none
     dir: config-root
